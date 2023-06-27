@@ -10,11 +10,22 @@ void display(int index) {
 }
 
 void blinkSeconds() {
-  Serial.println("llamada");
   if (markSeconds){
     digitalWrite(PIN_SECONDS, HIGH);
-    Serial.println("blink");
   } else {
     digitalWrite(PIN_SECONDS, LOW);
   }
 }
+
+
+/*
+    stringText = "currentState: ";
+    stringMsg = stringText + currentState;
+    Serial.println(stringMsg);
+
+      if (currentMillis - lastTimeButtonsChecked >= 5*INTERVAL) {
+    lastTimeButtonsChecked = currentMillis;
+
+    determineGroupOfTransitions();
+  }
+*/

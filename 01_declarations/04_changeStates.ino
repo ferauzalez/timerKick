@@ -15,9 +15,3 @@ void changeState(int newState) {
       break;
   }
 }
-
-void activateWaitStateOutputs() {
-  Serial.print("activate");
-  display(0);
-  blinkSeconds();
-}
