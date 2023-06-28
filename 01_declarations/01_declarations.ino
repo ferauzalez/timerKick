@@ -1,10 +1,18 @@
 //constantes-------------------------------------------------------------------
-const int PIN_LATCH        = 2;
+const int    PIN_LATCH        = 2;
 const int PIN_CLOCK        = 3;
 const int PIN_DATA         = 4;
 const int PIN_SECONDS      = 12;
 
 const int STATE_WAIT       = 0;
+
+const int INPUT_INCREASE = 0;
+const int INPUT_DECREASE = 1;
+const int INPUT_NEXT     = 2;
+const int INPUT_PLAY     = 3;
+const int INPUT_PAUSE    = 4;
+const int INPUT_STOP     = 5;
+const int NONE           = 6;
 
 const int INTERVAL         = 10;
 
@@ -28,3 +36,9 @@ unsigned long        lastTimeColonStatusBlink   = 0;
 unsigned long        lastTimeButtonsChecked     = 0;
 String               stringText                 = "";
 String               stringMsg                  = "";
+bool                 playPauseSwitchStatus      = false;
+int                  plusButtonValue       = LOW;
+int         minusButtonValue      =  LOW;
+int         nextButtonValue       =  LOW;
+int         playPauseButtonValue  =  LOW;
+int         stopButtonValue       =  LOW;
