@@ -8,13 +8,3 @@ void display(int index) {
 
   digitalWrite(PIN_LATCH, HIGH);
 }
-
-void blinkSeconds() {
-  Serial.println("llamada");
-  if (markSeconds){
-    digitalWrite(PIN_SECONDS, HIGH);
-    Serial.println("blink");
-  } else {
-    digitalWrite(PIN_SECONDS, LOW);
-  }
-}
