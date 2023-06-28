@@ -25,5 +25,6 @@ int                  colonMode                  = 0; //0: OFF, 1: ON, 2: blink
 int                  colonStatus                = LOW;
 static unsigned long currentMillis              = 0;
 unsigned long        lastTimeColonStatusBlink   = 0;
+unsigned long        lastTimeButtonsChecked     = 0;
 String               stringText                 = "";
 String               stringMsg                  = "";
