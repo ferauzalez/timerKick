@@ -15,9 +15,3 @@ void changeState(int newState) {
       break;
   }
 }
-
-void activateWaitStateOutputs() {
-  Serial.println("activateWaitStateOutputs");
-  display(0);
-  colonMode = 2;
-}
