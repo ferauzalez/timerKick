@@ -7,10 +7,10 @@ void setup() {
   pinMode(PIN_SECONDS     , OUTPUT);
 
   pinMode(A0              , INPUT); //PIN_BUTTON_PLUS
-  pinMode(A1, INPUT); //PIN_BUTTON_MINUS
-  pinMode(A2 , INPUT); //PIN_BUTTON_NEXT
-  pinMode(A3 , INPUT); //PIN_BUTTON_PLAY
-  pinMode(A4 , INPUT); //PIN_BUTTON_STOP
+  pinMode(A1              , INPUT); //PIN_BUTTON_MINUS
+  pinMode(A2              , INPUT); //PIN_BUTTON_NEXT
+  pinMode(A3              , INPUT); //PIN_BUTTON_PLAY
+  pinMode(A4              , INPUT); //PIN_BUTTON_STOP
 
   determineGroupOfTransitions();
 }
@@ -18,51 +18,29 @@ void setup() {
 void loop() {
   currentMillis = millis();
 
-  switch (colonMode) {
-    case 0:
-      digitalWrite(PIN_SECONDS, LOW);
-      break;
-    case 1:
-      digitalWrite(PIN_SECONDS, HIGH);
-      break;
-    case 2:
-      blinkColon();
-      break;
-    default:
-      digitalWrite(PIN_SECONDS, LOW);
-      break;
-  }
-
   if (currentMillis - lastTimeButtonsChecked >= 13 * INTERVAL) {
+
     lastTimeButtonsChecked = currentMillis;
 
-    if (playPauseButtonValue == HIGH) {
-      if (playPauseSwitchStatus == true) {
-        playPauseSwitchStatus = false;
-      } else {
-        playPauseSwitchStatus = true;
-      }
-    }
-
-    if (digitalRead(A0)) {           //PIN_BUTTON_PLUS
+    if (digitalRead(A0)) {                 //PIN_BUTTON_PLUS
       currentInput = INPUT_INCREASE;
       Serial.println("MAS");
-
       determineGroupOfTransitions();
     } else if (digitalRead(A1)) {          //PIN_BUTTON_MINUS
       currentInput = INPUT_DECREASE;
       Serial.println("MINUS");
-    } else if (digitalRead(A2)) {         //PIN_BUTTON_NEXT
+    } else if (digitalRead(A2)) {          //PIN_BUTTON_NEXT
       currentInput = INPUT_NEXT;
       Serial.println("NEXT");
-    } else if (digitalRead(A3)) {   //PIN_BUTTON_PLAY
+    } else if (digitalRead(A3)) {          //PIN_BUTTON_PLAY
       currentInput = INPUT_PLAY;
       Serial.println("PLAY");
-    } else if (digitalRead(A4)) {        //PIN_BUTTON_STOP
+      togglePlayPauseSwitchStatus();
+    } else if (digitalRead(A4)) {          //PIN_BUTTON_STOP
       currentInput = INPUT_STOP;
       Serial.println("STOP");
-    } else {
-      activateWaitStateOutputs();
     }
   }
+
+  activateWaitStateOutputs();
 }

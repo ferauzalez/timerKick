@@ -1,9 +1,10 @@
 void activateWaitStateOutputs() {
   display(0);
-  colonMode = 2;
+  switchColonMode(2);
 }
 
 void activateIncreaseStateOutputs() {
   increaseTime();
-  colonMode = 2;
+  assignDataToPrintOut(0);
+  switchColonMode(1);
 }

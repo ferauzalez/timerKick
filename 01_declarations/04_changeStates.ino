@@ -14,7 +14,7 @@ void changeState(int newState) {
       activateIncreaseStateOutputs();
       break;
     default:
-      activateWaitStateOutputs();  //Nunca deberia entrar acá
+      activateWaitStateOutputs();
       break;
   }
 }

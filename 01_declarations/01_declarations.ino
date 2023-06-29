@@ -1,19 +1,19 @@
 //constantes-------------------------------------------------------------------
-const int    PIN_LATCH        = 2;
+const int PIN_LATCH        = 2;
 const int PIN_CLOCK        = 3;
 const int PIN_DATA         = 4;
 const int PIN_SECONDS      = 12;
 
 const int STATE_WAIT       = 0;
-const int STATE_INCREASE       = 0;
+const int STATE_INCREASE   = 1;
 
-const int INPUT_INCREASE = 0;
-const int INPUT_DECREASE = 1;
-const int INPUT_NEXT     = 2;
-const int INPUT_PLAY     = 3;
-const int INPUT_PAUSE    = 4;
-const int INPUT_STOP     = 5;
-const int NONE           = 6;
+const int INPUT_INCREASE   = 0;
+const int INPUT_DECREASE   = 1;
+const int INPUT_NEXT       = 2;
+const int INPUT_PLAY       = 3;
+const int INPUT_PAUSE      = 4;
+const int INPUT_STOP       = 5;
+const int NONE             = 6;
 
 const int INTERVAL         = 10;
 
@@ -30,7 +30,6 @@ int indicesToDisplay[2][4] = {
 
 int                  currentState               = STATE_WAIT;
 int                  currentInput               = 0;
-int                  colonMode                  = 0; //0: OFF, 1: ON, 2: blink
 int                  colonStatus                = LOW;
 static unsigned long currentMillis              = 0;
 unsigned long        lastTimeColonStatusBlink   = 0;
@@ -38,12 +37,11 @@ unsigned long        lastTimeButtonsChecked     = 0;
 String               stringText                 = "";
 String               stringMsg                  = "";
 bool                 playPauseSwitchStatus      = false;
-int                  plusButtonValue       = LOW;
-int         minusButtonValue      =  LOW;
-int         nextButtonValue       =  LOW;
-int         playPauseButtonValue  =  LOW;
-int         stopButtonValue       =  LOW;
-int           digitSecond            = sevenSegmentsCodes ;
-int           digitTenthOfASecond    = sevenSegmentsCodes ;
-int           digitMinute            = sevenSegmentsCodes ;
-int           digitTenthOfAMinute    = sevenSegmentsCodes ;
+int                  digitSecondTime1              = 0;
+int                  digitTenthOfASecond        = 0;
+int                  digitMinute                = 0;
+int                  digitTenthOfAMinute        = 0;
+int                  digitSecond                = 0;
+int                  digitTenthOfASecond        = 0;
+int                  digitMinute                = 0;
+int                  digitTenthOfAMinute        = 0;

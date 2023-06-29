@@ -13,21 +13,21 @@ void blinkColon() {
   if (currentMillis - lastTimeColonStatusBlink >= 100 * INTERVAL) {
     lastTimeColonStatusBlink = currentMillis;
 
-    if (colonStatus == HIGH){
+    if (colonStatus == HIGH) {
       colonStatus = LOW;
     } else {
       colonStatus = HIGH;
     }
-    
+
     digitalWrite(PIN_SECONDS, colonStatus);
   }
 }
 
-void increaseTime(){
+void increaseTime() {
   increaseSeconds();
 }
 
-void increaseSeconds(){
+void increaseSeconds() {
   if (digitSecond < 9) {
     digitSecond++;
   } else {
@@ -36,7 +36,7 @@ void increaseSeconds(){
   }
 }
 
-void increaseTenthOfASecond(){
+void increaseTenthOfASecond() {
   if (digitTenthOfASecond < 5) {
     digitTenthOfASecond++;
   } else {
@@ -45,7 +45,7 @@ void increaseTenthOfASecond(){
   }
 }
 
-void increaseMinutes(){
+void increaseMinutes() {
   if (digitMinute < 9) {
     digitMinute++;
   } else {
@@ -54,10 +54,45 @@ void increaseMinutes(){
   }
 }
 
-void increaseTenthOfAMinute(){
-  if (digitTenthOfAMinute < 9){
+void increaseTenthOfAMinute() {
+  if (digitTenthOfAMinute < 9) {
     digitTenthOfAMinute++;
   } else {
     digitTenthOfAMinute = 0;
-  }   
+  }
+}
+
+void assignDataToPrintOut(int index) {
+
+  indicesToDisplay[index][0] = SEVEN_SEGMENTS_CODES[digitSecond];
+  indicesToDisplay[index][1] = SEVEN_SEGMENTS_CODES[digitTenthOfASecond];
+  indicesToDisplay[index][2] = SEVEN_SEGMENTS_CODES[digitMinute];
+  indicesToDisplay[index][3] = SEVEN_SEGMENTS_CODES[digitTenthOfAMinute];
+}
+
+
+
+void togglePlayPauseSwitchStatus() {
+  if (playPauseSwitchStatus == true) {
+    playPauseSwitchStatus = false;
+  } else {
+    playPauseSwitchStatus = true;
+  }
+}
+
+void switchColonMode(int colonMode) {
+    switch (colonMode) { //0: OFF, 1: ON, 2: blink
+    case 0:
+      digitalWrite(PIN_SECONDS, LOW);
+      break;
+    case 1:
+      digitalWrite(PIN_SECONDS, HIGH);
+      break;
+    case 2:
+      blinkColon();
+      break;
+    default:
+      digitalWrite(PIN_SECONDS, LOW);
+      break;
+  }
 }
