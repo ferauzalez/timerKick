@@ -1,9 +1,9 @@
 void changeState(int state) {
+  if (state != STATE_WAIT) {
   stringText = "state: ";
   stringMsg = stringText + state;
   Serial.println(stringMsg);
-
-  //currentState = newState;
+  }
 
   switch (state) {
     case STATE_INCREASE:

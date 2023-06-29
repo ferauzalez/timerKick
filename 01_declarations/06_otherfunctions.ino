@@ -50,7 +50,7 @@ void increaseMinutes() {
     digitMinute++;
   } else {
     digitMinute = 0;
-    increaseTenthOfASecond();
+    increaseTenthOfAMinute();
   }
 }
 
