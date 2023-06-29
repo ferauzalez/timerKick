@@ -13,7 +13,7 @@ const int INPUT_NEXT       = 2;
 const int INPUT_PLAY       = 3;
 const int INPUT_PAUSE      = 4;
 const int INPUT_STOP       = 5;
-const int NONE             = 6;
+const int INPUT_WAIT       = 6;
 
 const int INTERVAL         = 10;
 
@@ -28,8 +28,8 @@ int indicesToDisplay[2][4] = {
   {SEVEN_SEGMENTS_CODES[11], SEVEN_SEGMENTS_CODES[11], SEVEN_SEGMENTS_CODES[11], SEVEN_SEGMENTS_CODES[11]}
 };//chequear esta declaracion
 
-int                  currentState               = STATE_WAIT;
-int                  currentInput               = 0;
+//int                  state                      = STATE_WAIT;
+//int                  currentInput               = 0;
 int                  colonStatus                = LOW;
 static unsigned long currentMillis              = 0;
 unsigned long        lastTimeColonStatusBlink   = 0;
@@ -37,10 +37,6 @@ unsigned long        lastTimeButtonsChecked     = 0;
 String               stringText                 = "";
 String               stringMsg                  = "";
 bool                 playPauseSwitchStatus      = false;
-int                  digitSecondTime1              = 0;
-int                  digitTenthOfASecond        = 0;
-int                  digitMinute                = 0;
-int                  digitTenthOfAMinute        = 0;
 int                  digitSecond                = 0;
 int                  digitTenthOfASecond        = 0;
 int                  digitMinute                = 0;

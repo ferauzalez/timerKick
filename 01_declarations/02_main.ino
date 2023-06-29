@@ -11,8 +11,6 @@ void setup() {
   pinMode(A2              , INPUT); //PIN_BUTTON_NEXT
   pinMode(A3              , INPUT); //PIN_BUTTON_PLAY
   pinMode(A4              , INPUT); //PIN_BUTTON_STOP
-
-  determineGroupOfTransitions();
 }
 
 void loop() {
@@ -23,24 +21,23 @@ void loop() {
     lastTimeButtonsChecked = currentMillis;
 
     if (digitalRead(A0)) {                 //PIN_BUTTON_PLUS
-      currentInput = INPUT_INCREASE;
       Serial.println("MAS");
-      determineGroupOfTransitions();
+      transition(INPUT_INCREASE);
     } else if (digitalRead(A1)) {          //PIN_BUTTON_MINUS
-      currentInput = INPUT_DECREASE;
+      //currentInput = INPUT_DECREASE;
       Serial.println("MINUS");
     } else if (digitalRead(A2)) {          //PIN_BUTTON_NEXT
-      currentInput = INPUT_NEXT;
+      //currentInput = INPUT_NEXT;
       Serial.println("NEXT");
     } else if (digitalRead(A3)) {          //PIN_BUTTON_PLAY
-      currentInput = INPUT_PLAY;
+      //currentInput = INPUT_PLAY;
       Serial.println("PLAY");
       togglePlayPauseSwitchStatus();
     } else if (digitalRead(A4)) {          //PIN_BUTTON_STOP
-      currentInput = INPUT_STOP;
+      //currentInput = INPUT_STOP;
       Serial.println("STOP");
     }
   }
 
-  activateWaitStateOutputs();
+  transition(INPUT_WAIT);
 }

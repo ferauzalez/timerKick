@@ -70,8 +70,6 @@ void assignDataToPrintOut(int index) {
   indicesToDisplay[index][3] = SEVEN_SEGMENTS_CODES[digitTenthOfAMinute];
 }
 
-
-
 void togglePlayPauseSwitchStatus() {
   if (playPauseSwitchStatus == true) {
     playPauseSwitchStatus = false;
