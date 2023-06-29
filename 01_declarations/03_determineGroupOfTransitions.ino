@@ -13,6 +13,9 @@ void determineTransitionFromWaitState(){
   Serial.println(stringMsg);
   
   switch (currentInput) {
+    case INPUT_INCREASE:
+      changeState(STATE_INCREASE);
+      break;
     default:
       changeState(STATE_WAIT);
       break;

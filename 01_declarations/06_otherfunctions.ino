@@ -22,3 +22,42 @@ void blinkColon() {
     digitalWrite(PIN_SECONDS, colonStatus);
   }
 }
+
+void increaseTime(){
+  increaseSeconds();
+}
+
+void increaseSeconds(){
+  if (digitSecond < 9) {
+    digitSecond++;
+  } else {
+    digitSecond = 0;
+    increaseTenthOfASecond();
+  }
+}
+
+void increaseTenthOfASecond(){
+  if (digitTenthOfASecond < 5) {
+    digitTenthOfASecond++;
+  } else {
+    digitTenthOfASecond = 0;
+    increaseMinutes();
+  }
+}
+
+void increaseMinutes(){
+  if (digitMinute < 9) {
+    digitMinute++;
+  } else {
+    digitMinute = 0;
+    increaseTenthOfASecond();
+  }
+}
+
+void increaseTenthOfAMinute(){
+  if (digitTenthOfAMinute < 9){
+    digitTenthOfAMinute++;
+  } else {
+    digitTenthOfAMinute = 0;
+  }   
+}

@@ -5,6 +5,7 @@ const int PIN_DATA         = 4;
 const int PIN_SECONDS      = 12;
 
 const int STATE_WAIT       = 0;
+const int STATE_INCREASE       = 0;
 
 const int INPUT_INCREASE = 0;
 const int INPUT_DECREASE = 1;
@@ -42,3 +43,7 @@ int         minusButtonValue      =  LOW;
 int         nextButtonValue       =  LOW;
 int         playPauseButtonValue  =  LOW;
 int         stopButtonValue       =  LOW;
+int           digitSecond            = sevenSegmentsCodes ;
+int           digitTenthOfASecond    = sevenSegmentsCodes ;
+int           digitMinute            = sevenSegmentsCodes ;
+int           digitTenthOfAMinute    = sevenSegmentsCodes ;

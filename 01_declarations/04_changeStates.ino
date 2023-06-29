@@ -10,6 +10,9 @@ void changeState(int newState) {
   currentState = newState;
 
   switch (currentState) {
+    case STATE_INCREASE:
+      activateIncreaseStateOutputs();
+      break;
     default:
       activateWaitStateOutputs();  //Nunca deberia entrar acá
       break;

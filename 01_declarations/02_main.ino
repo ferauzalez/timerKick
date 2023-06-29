@@ -18,8 +18,19 @@ void setup() {
 void loop() {
   currentMillis = millis();
 
-  if (colonMode == 2) {
-    blinkColon();
+  switch (colonMode) {
+    case 0:
+      digitalWrite(PIN_SECONDS, LOW);
+      break;
+    case 1:
+      digitalWrite(PIN_SECONDS, HIGH);
+      break;
+    case 2:
+      blinkColon();
+      break;
+    default:
+      digitalWrite(PIN_SECONDS, LOW);
+      break;
   }
 
   if (currentMillis - lastTimeButtonsChecked >= 13 * INTERVAL) {
@@ -36,26 +47,22 @@ void loop() {
     if (digitalRead(A0)) {           //PIN_BUTTON_PLUS
       currentInput = INPUT_INCREASE;
       Serial.println("MAS");
-    }
 
-    if (digitalRead(A1)) {          //PIN_BUTTON_MINUS
+      determineGroupOfTransitions();
+    } else if (digitalRead(A1)) {          //PIN_BUTTON_MINUS
       currentInput = INPUT_DECREASE;
       Serial.println("MINUS");
-    }
-
-    if (digitalRead(A2)) {         //PIN_BUTTON_NEXT
+    } else if (digitalRead(A2)) {         //PIN_BUTTON_NEXT
       currentInput = INPUT_NEXT;
       Serial.println("NEXT");
-    }
-
-    if (digitalRead(A3)) {   //PIN_BUTTON_PLAY
+    } else if (digitalRead(A3)) {   //PIN_BUTTON_PLAY
       currentInput = INPUT_PLAY;
       Serial.println("PLAY");
-    }
-
-    if (digitalRead(A4)) {        //PIN_BUTTON_STOP
+    } else if (digitalRead(A4)) {        //PIN_BUTTON_STOP
       currentInput = INPUT_STOP;
       Serial.println("STOP");
+    } else {
+      activateWaitStateOutputs();
     }
   }
 }
