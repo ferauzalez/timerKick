@@ -1,16 +1,15 @@
-void activateDecreseStateOutputs() {
+void activateDecreaseStateOutputs() {
   decreaseTime();
-  assignDataToPrintOut(0);
   switchColonMode(1);
 }
 
 void activateIncreaseStateOutputs() {
   increaseTime();
-  assignDataToPrintOut(0);
   switchColonMode(1);
 }
 
 void activateWaitStateOutputs() {
   switchColonMode(2);
+  assignDataToPrintOut(0);
   display(0);
 }
