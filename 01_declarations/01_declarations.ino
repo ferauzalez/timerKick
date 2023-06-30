@@ -6,6 +6,7 @@ const int PIN_SECONDS      = 12;
 
 const int STATE_WAIT       = 0;
 const int STATE_INCREASE   = 1;
+const int STATE_DECREASE   = 2;
 
 const int INPUT_INCREASE   = 0;
 const int INPUT_DECREASE   = 1;
@@ -36,7 +37,7 @@ unsigned long        lastSecondMark             = 0;
 String               stringText                 = "";
 String               stringMsg                  = "";
 bool                 playPauseSwitchStatus      = false;
-int                  digitSecond                = 0;
-int                  digitTenthOfASecond        = 0;
-int                  digitMinute                = 0;
 int                  digitTenthOfAMinute        = 0;
+int                  digitMinute                = 0;
+int                  digitTenthOfASecond        = 0;
+int                  digitSecond                = 0;

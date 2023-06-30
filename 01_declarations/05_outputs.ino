@@ -1,21 +1,15 @@
-void activateDecreseStateOutputs() {
-  switchColonMode(1);
+void activateDecreaseStateOutputs() {
   decreaseTime();
-  assignDataToPrintOut(0);
+  switchColonMode(1);
 }
 
 void activateIncreaseStateOutputs() {
-  switchColonMode(1);
   increaseTime();
-  assignDataToPrintOut(0);
+  switchColonMode(1);
 }
 
 void activateWaitStateOutputs() {
-  if (playPauseSwitchStatus) {
-    switchColonMode(1);
-  } else {
-    switchColonMode(2);
-  }
-  
+  assignDataToPrintOut(0);
   display(0);
+  switchColonMode(2);
 }
