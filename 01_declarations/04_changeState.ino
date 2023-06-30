@@ -6,6 +6,9 @@ void changeState(int state) {
   }
 
   switch (state) {
+    case STATE_DECREASE_
+      activateDecreseStateOutputs();
+      break;
     case STATE_INCREASE:
       activateIncreaseStateOutputs();
       break;

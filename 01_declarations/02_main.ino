@@ -26,6 +26,7 @@ void loop() {
     } else if (digitalRead(A1)) {          //PIN_BUTTON_MINUS
       //currentInput = INPUT_DECREASE;
       Serial.println("MINUS");
+      transition(INPUT_DECREASE);
     } else if (digitalRead(A2)) {          //PIN_BUTTON_NEXT
       //currentInput = INPUT_NEXT;
       Serial.println("NEXT");
