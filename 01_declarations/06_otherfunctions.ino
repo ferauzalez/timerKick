@@ -109,6 +109,16 @@ void increaseTenthOfAMinute() {
   }
 }
 
+void makeACountDown() {
+  if (currentMillis - lastSecondMark >= 100 * INTERVAL) {
+    lastSecondMark = currentMillis;
+    transition(INPUT_DECREASE);
+    if (digitSecond == 0 and digitTenthOfASecond == 0 and digitMinute == 0 and digitTenthOfAMinute == 0) {
+      togglePlayPauseSwitchStatus();
+    }
+  }
+}
+
 void switchColonMode(int colonMode) {
   switch (colonMode) {  //0: OFF, 1: ON, 2: blink
     case 0:
@@ -127,9 +137,10 @@ void switchColonMode(int colonMode) {
 }
 
 void togglePlayPauseSwitchStatus() {
+  playPauseSwitchStatus = !playPauseSwitchStatus;
   if (playPauseSwitchStatus == true) {
-    playPauseSwitchStatus = false;
+    Serial.println("PAUSE");//means input is PAUSE
   } else {
-    playPauseSwitchStatus = true;
+    Serial.println("PLAY");//means input is PLAY
   }
 }

@@ -26,14 +26,13 @@ const int SEVEN_SEGMENTS_CODES[12] = {126, 48, 109, 121, 51, 91, 95, 112, 127, 1
 int indicesToDisplay[2][4] = {
   {SEVEN_SEGMENTS_CODES[11], SEVEN_SEGMENTS_CODES[11], SEVEN_SEGMENTS_CODES[11], SEVEN_SEGMENTS_CODES[11]},
   {SEVEN_SEGMENTS_CODES[11], SEVEN_SEGMENTS_CODES[11], SEVEN_SEGMENTS_CODES[11], SEVEN_SEGMENTS_CODES[11]}
-};//chequear esta declaracion
+};
 
-//int                  state                      = STATE_WAIT;
-//int                  currentInput               = 0;
 int                  colonStatus                = LOW;
 static unsigned long currentMillis              = 0;
 unsigned long        lastTimeColonStatusBlink   = 0;
 unsigned long        lastTimeButtonsChecked     = 0;
+unsigned long        lastSecondMark             = 0;
 String               stringText                 = "";
 String               stringMsg                  = "";
 bool                 playPauseSwitchStatus      = false;

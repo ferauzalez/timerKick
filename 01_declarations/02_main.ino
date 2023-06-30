@@ -1,16 +1,16 @@
 void setup() {
   Serial.begin(9600);
 
-  pinMode(PIN_LATCH       , OUTPUT);
-  pinMode(PIN_CLOCK       , OUTPUT);
-  pinMode(PIN_DATA        , OUTPUT);
-  pinMode(PIN_SECONDS     , OUTPUT);
+  pinMode(PIN_LATCH, OUTPUT);
+  pinMode(PIN_CLOCK, OUTPUT);
+  pinMode(PIN_DATA, OUTPUT);
+  pinMode(PIN_SECONDS, OUTPUT);
 
-  pinMode(A0              , INPUT); //PIN_BUTTON_PLUS
-  pinMode(A1              , INPUT); //PIN_BUTTON_MINUS
-  pinMode(A2              , INPUT); //PIN_BUTTON_NEXT
-  pinMode(A3              , INPUT); //PIN_BUTTON_PLAY
-  pinMode(A4              , INPUT); //PIN_BUTTON_STOP
+  pinMode(A0, INPUT);  //PIN_BUTTON_PLUS
+  pinMode(A1, INPUT);  //PIN_BUTTON_MINUS
+  pinMode(A2, INPUT);  //PIN_BUTTON_NEXT
+  pinMode(A3, INPUT);  //PIN_BUTTON_PLAY
+  pinMode(A4, INPUT);  //PIN_BUTTON_STOP
 }
 
 void loop() {
@@ -20,23 +20,20 @@ void loop() {
 
     lastTimeButtonsChecked = currentMillis;
 
-    if (digitalRead(A0)) {                 //PIN_BUTTON_PLUS
+    if (digitalRead(A0)) {  //PIN_BUTTON_PLUS
       Serial.println("MAS");
       transition(INPUT_INCREASE);
-    } else if (digitalRead(A1)) {          //PIN_BUTTON_MINUS
-      //currentInput = INPUT_DECREASE;
+    } else if (digitalRead(A1)) {  //PIN_BUTTON_MINUS
       Serial.println("MINUS");
       transition(INPUT_DECREASE);
-    } else if (digitalRead(A2)) {          //PIN_BUTTON_NEXT
-      //currentInput = INPUT_NEXT;
+    } else if (digitalRead(A2)) {  //PIN_BUTTON_NEXT
       Serial.println("NEXT");
-    } else if (digitalRead(A3)) {          //PIN_BUTTON_PLAY
-      //currentInput = INPUT_PLAY;
-      Serial.println("PLAY");
+    } else if (digitalRead(A3)) {  //PIN_BUTTON_PLAY_PAUSE
       togglePlayPauseSwitchStatus();
-    } else if (digitalRead(A4)) {          //PIN_BUTTON_STOP
-      //currentInput = INPUT_STOP;
+    } else if (digitalRead(A4)) {  //PIN_BUTTON_STOP
       Serial.println("STOP");
+    } else if (playPauseSwitchStatus == true) {  //means play is active
+      makeACountDown();
     }
   }
 
