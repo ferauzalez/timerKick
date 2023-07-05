@@ -6,7 +6,7 @@ void assignDataToPrintOut(int index) {
 }
 
 void blinkColon() {
-  if (currentMillis - lastTimeColonStatusBlink >= 100 * INTERVAL) {
+  if (currentMillis - lastTimeColonStatusBlink >= ONE_SECOND) {
     lastTimeColonStatusBlink = currentMillis;
 
     if (colonStatus == HIGH) {
@@ -16,6 +16,12 @@ void blinkColon() {
     }
 
     digitalWrite(PIN_SECONDS, colonStatus);
+  }
+}
+
+void countdownStarted(){
+  if (playPauseSwitchStatus == true) {
+      playSound(1);   
   }
 }
 
@@ -109,13 +115,27 @@ void increaseTenthOfAMinute() {
 }
 
 void makeACountDown() {
-  if (currentMillis - lastSecondMark >= 100 * INTERVAL) {
+  if (currentMillis - lastSecondMark >= ONE_SECOND) {
     lastSecondMark = currentMillis;
     transition(INPUT_DECREASE);
+    if (digitSecond == 1 and digitTenthOfASecond == 1 and digitMinute == 0 and digitTenthOfAMinute == 0) {
+      playSound(3);
+    }
+
+    if (digitSecond == 1 and digitTenthOfASecond == 0 and digitMinute == 0 and digitTenthOfAMinute == 0) {
+      playSound(2);
+    }
+    
     if (digitSecond == 0 and digitTenthOfASecond == 0 and digitMinute == 0 and digitTenthOfAMinute == 0) {
       togglePlayPauseSwitchStatus();
     }
   }
+}
+
+void playSound(int fileNumber) {
+  myDFPlayer.volume(30);
+  myDFPlayer.play(fileNumber);
+   // must be 1,2 or 3.
 }
 
 void switchColonMode(int colonMode) {
@@ -135,11 +155,19 @@ void switchColonMode(int colonMode) {
   }
 }
 
+bool togglesDurationGreaterThanTimeWindow (){
+    if (currentMillis - lastTimePlayPauseStatusChanged >= ONE_SECOND) {
+    lastTimePlayPauseStatusChanged = currentMillis;
+    return true;
+    }
+    return false;
+}
+    
 void togglePlayPauseSwitchStatus() {
   playPauseSwitchStatus = !playPauseSwitchStatus;
-  if (playPauseSwitchStatus == true) {
-    Serial.println("PAUSE");//means input is PAUSE
+  if (playPauseSwitchStatus) {
+    //Serial.println("PAUSE");//means input is PAUSE
   } else {
-    Serial.println("PLAY");//means input is PLAY
+    //Serial.println("PLAY");//means input is PLAY
   }
 }

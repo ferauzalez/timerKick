@@ -11,5 +11,9 @@ void activateIncreaseStateOutputs() {
 void activateWaitStateOutputs() {
   assignDataToPrintOut(0);
   display(0);
-  switchColonMode(2);
+  if (playPauseSwitchStatus) {
+    switchColonMode(1);
+  } else {
+    switchColonMode(2);
+  }
 }

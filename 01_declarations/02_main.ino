@@ -1,5 +1,8 @@
 void setup() {
-  Serial.begin(9600);
+  //Serial.begin(9600);
+  DFPlayerSerial.begin(9600);
+  myDFPlayer.begin(DFPlayerSerial);
+  
 
   pinMode(PIN_LATCH, OUTPUT);
   pinMode(PIN_CLOCK, OUTPUT);
@@ -16,22 +19,26 @@ void setup() {
 void loop() {
   currentMillis = millis();
 
-  if (currentMillis - lastTimeButtonsChecked >= 13 * INTERVAL) {
+  if (currentMillis - lastTimeButtonsChecked >= INPUTS_READING_PERIOD) {
 
     lastTimeButtonsChecked = currentMillis;
 
     if (digitalRead(A0)) {  //PIN_BUTTON_PLUS
-      Serial.println("MAS");
+      //Serial.println("MAS");
       transition(INPUT_INCREASE);
     } else if (digitalRead(A1)) {  //PIN_BUTTON_MINUS
-      Serial.println("MINUS");
+      //Serial.println("MINUS");
       transition(INPUT_DECREASE);
     } else if (digitalRead(A2)) {  //PIN_BUTTON_NEXT
-      Serial.println("NEXT");
+      //Serial.println("NEXT");
     } else if (digitalRead(A3)) {  //PIN_BUTTON_PLAY_PAUSE
-      togglePlayPauseSwitchStatus();
+      if (togglesDurationGreaterThanTimeWindow()){
+        togglePlayPauseSwitchStatus();        
+        countdownStarted();
+        delay(1000);
+      }
     } else if (digitalRead(A4)) {  //PIN_BUTTON_STOP
-      Serial.println("STOP");
+      //Serial.println("STOP");
     } else if (playPauseSwitchStatus == true) {  //means play is active
       makeACountDown();
     }

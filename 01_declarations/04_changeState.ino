@@ -2,7 +2,7 @@ void changeState(int state) {
   if (state != STATE_WAIT) {
   stringText = "state: ";
   stringMsg = stringText + state;
-  Serial.println(stringMsg);
+  //Serial.println(stringMsg);
   }
 
   switch (state) {
