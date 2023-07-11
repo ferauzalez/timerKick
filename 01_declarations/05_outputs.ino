@@ -1,6 +1,6 @@
 void activateDecreaseStateOutputs() {
   decreaseTime();
-  switchColonMode(1);
+  switchColonMode(1); //una sola vez deberia activarse esta instruccion
 }
 
 void activateIncreaseStateOutputs() {
@@ -9,8 +9,8 @@ void activateIncreaseStateOutputs() {
 }
 
 void activateWaitStateOutputs() {
-  assignDataToPrintOut(0);
-  display(0);
+  //assignDataToPrintOut(0);
+  display();
   if (playPauseSwitchStatus) {
     switchColonMode(1);
   } else {

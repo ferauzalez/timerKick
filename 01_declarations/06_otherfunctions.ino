@@ -1,9 +1,40 @@
-void assignDataToPrintOut(int index) {  
-  indicesToDisplay[index][0] = SEVEN_SEGMENTS_CODES[digitSecond];
-  indicesToDisplay[index][1] = SEVEN_SEGMENTS_CODES[digitTenthOfASecond];
-  indicesToDisplay[index][2] = SEVEN_SEGMENTS_CODES[digitMinute];
-  indicesToDisplay[index][3] = SEVEN_SEGMENTS_CODES[digitTenthOfAMinute];
+/*void assignDataToPrintOut(int index) {  
+  if (index == 0) {
+    indicesToDisplay[0][0] = SEVEN_SEGMENTS_CODES[index0Second];         //digitSecond
+    indicesToDisplay[0][1] = SEVEN_SEGMENTS_CODES[index0TenthOfASecond]; //digitTenthOfASecond
+    indicesToDisplay[0][2] = SEVEN_SEGMENTS_CODES[index0Minute];         //digitMinute
+    indicesToDisplay[0][3] = SEVEN_SEGMENTS_CODES[index0TenthOfAMinute]; //digitTenthOfAMinute
+
+    return;
+  }
+
+  if (index == 1) {
+    indicesToDisplay[1][0] = SEVEN_SEGMENTS_CODES[index1Second];         //digitSecond
+    indicesToDisplay[1][1] = SEVEN_SEGMENTS_CODES[index1TenthOfASecond]; //digitTenthOfASecond
+    indicesToDisplay[1][2] = SEVEN_SEGMENTS_CODES[index1Minute];         //digitMinute
+    indicesToDisplay[1][3] = SEVEN_SEGMENTS_CODES[index1TenthOfAMinute]; //digitTenthOfAMinute
+
+    return;
+  }
+}*/
+
+void assignDigitsForCountdown() {
+
+  if (workRoutine) {
+    indexSecond         = indexSecondOfWorkRoutine;
+    indexTenthOfASecond = indexTenthOfASecondOfWorkRoutine;
+    indexMinute         = indexMinuteOfWorkRoutine;
+    indexTenthOfAMinute = indexTenthOfAMinuteOfWorkRoutine;
+    
+    return;
+  }
+    indexSecond         = indexSecondOfRestRoutine;
+    indexTenthOfASecond = indexTenthOfASecondOfRestRoutine;
+    indexMinute         = indexMinuteOfRestRoutine;
+    indexTenthOfAMinute = indexTenthOfAMinuteOfRestRoutine;
 }
+
+
 
 void blinkColon() {
   if (currentMillis - lastTimeColonStatusBlink >= ONE_SECOND) {
@@ -19,10 +50,44 @@ void blinkColon() {
   }
 }
 
+void checkForSounds() {
+  if (!workRoutine) {
+    return;    
+  }
+
+  if (indexSecond         == indexSecondOfWorkRoutine         and
+      indexTenthOfASecond == indexTenthOfASecondOfWorkRoutine and
+      indexMinute         == indexMinuteOfWorkRoutine         and
+      indexTenthOfAMinute == indexTenthOfAMinuteOfWorkRoutine
+  ) {
+    playSound(1);
+  }
+  
+  if (indexSecond == 1 and indexTenthOfASecond == 1 and indexMinute == 0 and indexTenthOfAMinute == 0) {
+    playSound(3);
+  }
+
+  if (indexSecond == 1 and indexTenthOfASecond == 0 and indexMinute == 0 and indexTenthOfAMinute == 0) {
+    playSound(2);
+  }
+}
+
+bool countdownFinished() {
+  if (indexSecond != 0 or indexTenthOfASecond != 0 or indexMinute != 0 or indexTenthOfAMinute != 0) {
+    return false;
+    countdownFinishedMark = currentMillis;
+  }
+  return true;
+}
+
 void countdownStarted(){
+  /*
   if (playPauseSwitchStatus == true) {
       playSound(1);   
   }
+*/
+  workRoutine = true;
+  assignDigitsForCountdown();
 }
 
 void decreaseTime() {
@@ -30,40 +95,51 @@ void decreaseTime() {
 }
 
 void decreaseSeconds() {
-  if (digitSecond > 0) {
-    digitSecond--;
+  if (indexSecond > 0) {
+    indexSecond--;
   } else {
-    digitSecond = 9;
+    indexSecond = 9;
     decreaseTenthOfASecond();
   }
 }
-
 void decreaseTenthOfASecond() {
-  if (digitTenthOfASecond > 0) {
-    digitTenthOfASecond--;
+  if (indexTenthOfASecond > 0) {
+    indexTenthOfASecond--;
   } else {
-    digitTenthOfASecond = 5;
+    indexTenthOfASecond = 5;
     decreaseMinutes();
   }
 }
 
 void decreaseMinutes() {
-  if (digitMinute > 0) {
-    digitMinute--;
+  if (indexMinute > 0) {
+    indexMinute--;
   } else {
-    digitMinute = 9;
+    indexMinute = 9;
     decreaseTenthOfAMinute();
   }
 }
 
 void decreaseTenthOfAMinute() {
-  if (digitTenthOfAMinute > 0) {
-    digitTenthOfAMinute--;
+  if (indexTenthOfAMinute > 0) {
+    indexTenthOfAMinute--;
   } else {
-    digitTenthOfAMinute = 9;
+    indexTenthOfAMinute = 9;
   }
+} 
+
+void display() {
+  digitalWrite(PIN_LATCH, LOW);
+  
+  shiftOut(PIN_DATA, PIN_CLOCK, LSBFIRST, SEVEN_SEGMENTS_CODES[indexSecond]); //digitSecond
+  shiftOut(PIN_DATA, PIN_CLOCK, LSBFIRST, SEVEN_SEGMENTS_CODES[indexTenthOfASecond]); //digitTenthOfASecond
+  shiftOut(PIN_DATA, PIN_CLOCK, LSBFIRST, SEVEN_SEGMENTS_CODES[indexMinute]); //digitMinute
+  shiftOut(PIN_DATA, PIN_CLOCK, LSBFIRST, SEVEN_SEGMENTS_CODES[indexTenthOfAMinute]); //digitTenthOfAMinute
+
+  digitalWrite(PIN_LATCH, HIGH);
 }
 
+/*
 void display(int index) {
   digitalWrite(PIN_LATCH, LOW);
   
@@ -73,44 +149,44 @@ void display(int index) {
   shiftOut(PIN_DATA, PIN_CLOCK, LSBFIRST, indicesToDisplay[index][3]); //digitTenthOfAMinute
 
   digitalWrite(PIN_LATCH, HIGH);
-}
+}*/
 
 void increaseTime() {
   increaseSeconds();
 }
 
 void increaseSeconds() {
-  if (digitSecond < 9) {
-    digitSecond++;
+  if (indexSecond < 9) {
+    indexSecond++;
   } else {
-    digitSecond = 0;
+    indexSecond = 0;
     increaseTenthOfASecond();
   }
 }
 
 void increaseTenthOfASecond() {
-  if (digitTenthOfASecond < 5) {
-    digitTenthOfASecond++;
+  if (indexTenthOfASecond < 5) {
+    indexTenthOfASecond++;
   } else {
-    digitTenthOfASecond = 0;
+    indexTenthOfASecond = 0;
     increaseMinutes();
   }
 }
 
 void increaseMinutes() {
-  if (digitMinute < 9) {
-    digitMinute++;
+  if (indexMinute < 9) {
+    indexMinute++;
   } else {
-    digitMinute = 0;
+    indexMinute = 0;
     increaseTenthOfAMinute();
   }
 }
 
 void increaseTenthOfAMinute() {
-  if (digitTenthOfAMinute < 9) {
-    digitTenthOfAMinute++;
+  if (indexTenthOfAMinute < 9) {
+    indexTenthOfAMinute++;
   } else {
-    digitTenthOfAMinute = 0;
+    indexTenthOfAMinute = 0;
   }
 }
 
@@ -118,17 +194,6 @@ void makeACountDown() {
   if (currentMillis - lastSecondMark >= ONE_SECOND) {
     lastSecondMark = currentMillis;
     transition(INPUT_DECREASE);
-    if (digitSecond == 1 and digitTenthOfASecond == 1 and digitMinute == 0 and digitTenthOfAMinute == 0) {
-      playSound(3);
-    }
-
-    if (digitSecond == 1 and digitTenthOfASecond == 0 and digitMinute == 0 and digitTenthOfAMinute == 0) {
-      playSound(2);
-    }
-    
-    if (digitSecond == 0 and digitTenthOfASecond == 0 and digitMinute == 0 and digitTenthOfAMinute == 0) {
-      togglePlayPauseSwitchStatus();
-    }
   }
 }
 
@@ -136,6 +201,28 @@ void playSound(int fileNumber) {
   myDFPlayer.volume(30);
   myDFPlayer.play(fileNumber);
    // must be 1,2 or 3.
+}
+
+bool nextRoutineIsReady() {
+
+  if (currentMillis - countdownFinishedMark < 4000) {//ONE_SECOND
+    return false;
+  }
+
+  if (series == 0){
+    togglePlayPauseSwitchStatus();
+    return false;
+  }
+
+  workRoutine = !workRoutine;
+  
+  if (!workRoutine) {
+    series--;
+  }
+  
+  assignDigitsForCountdown();
+ 
+  return true;
 }
 
 void switchColonMode(int colonMode) {

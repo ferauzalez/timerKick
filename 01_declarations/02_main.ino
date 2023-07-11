@@ -14,6 +14,8 @@ void setup() {
   pinMode(A2, INPUT);  //PIN_BUTTON_NEXT
   pinMode(A3, INPUT);  //PIN_BUTTON_PLAY
   pinMode(A4, INPUT);  //PIN_BUTTON_STOP
+
+  assignDigitsForCountdown();
 }
 
 void loop() {
@@ -34,12 +36,20 @@ void loop() {
     } else if (digitalRead(A3)) {  //PIN_BUTTON_PLAY_PAUSE
       if (togglesDurationGreaterThanTimeWindow()){
         togglePlayPauseSwitchStatus();        
-        countdownStarted();
-        delay(1000);
+        //countdownStarted(); // ES NECESARIO???????
+        //delay(1000);
       }
     } else if (digitalRead(A4)) {  //PIN_BUTTON_STOP
       //Serial.println("STOP");
     } else if (playPauseSwitchStatus == true) {  //means play is active
+     
+      if (countdownFinished()) {//prepare the next routine
+        if (nextRoutineIsReady() == false) {
+          return;
+        }
+      }
+
+      checkForSounds();
       makeACountDown();
     }
   }

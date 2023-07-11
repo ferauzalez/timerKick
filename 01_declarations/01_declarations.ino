@@ -31,10 +31,18 @@ const int SEVEN_SEGMENTS_CODES[12] = {126, 48, 109, 121, 51, 91, 95, 112, 127, 1
 //variables--------------------------------------------------------------------
 //En el encendido del equipo no se deben encender los segmentos, por eso se incializa
 //indicesToDisplay con el elemento 11 (NONE)
+/*
 int indicesToDisplay[2][4] = {
   {SEVEN_SEGMENTS_CODES[11], SEVEN_SEGMENTS_CODES[11], SEVEN_SEGMENTS_CODES[11], SEVEN_SEGMENTS_CODES[11]},
   {SEVEN_SEGMENTS_CODES[11], SEVEN_SEGMENTS_CODES[11], SEVEN_SEGMENTS_CODES[11], SEVEN_SEGMENTS_CODES[11]}
-};
+};*/
+
+int workModes[6][4] = {{0,0,2,0},//work 1
+                       {0,0,2,5},
+                       {0,1,3,0},//work 2
+                       {0,0,2,0},
+                       {0,1,0,0},//work 3
+                       {0,0,3,0}};
 
 int                  colonStatus                        = LOW;
 static unsigned long currentMillis                      = 0;
@@ -42,11 +50,25 @@ unsigned long        lastTimeColonStatusBlink           = 0;
 unsigned long        lastTimeButtonsChecked             = 0;
 unsigned long        lastTimePlayPauseStatusChanged     = 0;
 unsigned long        lastSecondMark                     = 0;
+unsigned long        countdownFinishedMark                     = 0;
 String               stringText                         = "";
 String               stringMsg                          = "";
 bool                 playPauseSwitchStatus              = false;
-int                  digitTenthOfAMinute                = 0;
-int                  digitMinute                        = 0;
-int                  digitTenthOfASecond                = 2;
-int                  digitSecond                        = 0;
-//int                  fileNumber                         = 0;
+
+int                  indexTenthOfAMinuteOfWorkRoutine   = workModes[2][0];
+int                  indexMinuteOfWorkRoutine           = workModes[2][1];
+int                  indexTenthOfASecondOfWorkRoutine   = workModes[2][2];
+int                  indexSecondOfWorkRoutine           = workModes[2][3];
+
+int                  indexTenthOfAMinuteOfRestRoutine   = workModes[3][0];
+int                  indexMinuteOfRestRoutine           = workModes[3][1];
+int                  indexTenthOfASecondOfRestRoutine   = workModes[3][2];
+int                  indexSecondOfRestRoutine           = workModes[3][3];
+
+int                  indexTenthOfAMinute                = 11;
+int                  indexMinute                        = 11;
+int                  indexTenthOfASecond                = 11;
+int                  indexSecond                        = 11;
+
+bool                 workRoutine                        = true; //true means work, false means routine 1(rest)
+int                  series                             = 1;
