@@ -86,6 +86,7 @@ void countdownStarted(){
       playSound(1);   
   }
 */
+  series = 1;
   workRoutine = true;
   assignDigitsForCountdown();
 }

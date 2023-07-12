@@ -13,6 +13,7 @@ const int PIN_SECONDS      = 12;
 const int STATE_WAIT       = 0;
 const int STATE_INCREASE   = 1;
 const int STATE_DECREASE   = 2;
+const int STATE_STOP       = 3;
 
 const int INPUT_INCREASE   = 0;
 const int INPUT_DECREASE   = 1;
@@ -41,8 +42,8 @@ int workModes[6][4] = {{0,0,2,0},//work 1
                        {0,0,2,5},
                        {0,1,3,0},//work 2
                        {0,0,2,0},
-                       {0,1,0,0},//work 3
-                       {0,0,3,0}};
+                       {0,0,3,0},//work 3
+                       {0,0,2,0}};
 
 int                  colonStatus                        = LOW;
 static unsigned long currentMillis                      = 0;
@@ -55,15 +56,15 @@ String               stringText                         = "";
 String               stringMsg                          = "";
 bool                 playPauseSwitchStatus              = false;
 
-int                  indexTenthOfAMinuteOfWorkRoutine   = workModes[2][0];
-int                  indexMinuteOfWorkRoutine           = workModes[2][1];
-int                  indexTenthOfASecondOfWorkRoutine   = workModes[2][2];
-int                  indexSecondOfWorkRoutine           = workModes[2][3];
+int                  indexTenthOfAMinuteOfWorkRoutine   = workModes[4][0];
+int                  indexMinuteOfWorkRoutine           = workModes[4][1];
+int                  indexTenthOfASecondOfWorkRoutine   = workModes[4][2];
+int                  indexSecondOfWorkRoutine           = workModes[4][3];
 
-int                  indexTenthOfAMinuteOfRestRoutine   = workModes[3][0];
-int                  indexMinuteOfRestRoutine           = workModes[3][1];
-int                  indexTenthOfASecondOfRestRoutine   = workModes[3][2];
-int                  indexSecondOfRestRoutine           = workModes[3][3];
+int                  indexTenthOfAMinuteOfRestRoutine   = workModes[5][0];
+int                  indexMinuteOfRestRoutine           = workModes[5][1];
+int                  indexTenthOfASecondOfRestRoutine   = workModes[5][2];
+int                  indexSecondOfRestRoutine           = workModes[5][3];
 
 int                  indexTenthOfAMinute                = 11;
 int                  indexMinute                        = 11;
