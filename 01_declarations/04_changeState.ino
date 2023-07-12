@@ -15,5 +15,8 @@ void changeState(int state) {
     case STATE_WAIT:
       activateWaitStateOutputs();
       break;
+    case STATE_STOP:
+      activateStopStateOutputs();
+      break;
   }
 }

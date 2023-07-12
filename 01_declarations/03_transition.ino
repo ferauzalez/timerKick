@@ -14,5 +14,8 @@ void transition(int currentInput) {
     case INPUT_DECREASE:
       changeState(STATE_DECREASE);
       break;
+    case INPUT_STOP:
+      changeState(STATE_STOP);
+      break;
   }
 }

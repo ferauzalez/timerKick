@@ -1,6 +1,11 @@
+void activateStopStateOutputs() {
+  playPauseSwitchStatus = false;
+  countdownStarted();
+}
+
 void activateDecreaseStateOutputs() {
   decreaseTime();
-  switchColonMode(1); //una sola vez deberia activarse esta instruccion
+  switchColonMode(1);
 }
 
 void activateIncreaseStateOutputs() {
@@ -9,7 +14,6 @@ void activateIncreaseStateOutputs() {
 }
 
 void activateWaitStateOutputs() {
-  //assignDataToPrintOut(0);
   display();
   if (playPauseSwitchStatus) {
     switchColonMode(1);

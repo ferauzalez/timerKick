@@ -40,7 +40,7 @@ void loop() {
         //delay(1000);
       }
     } else if (digitalRead(A4)) {  //PIN_BUTTON_STOP
-      //Serial.println("STOP");
+      transition(INPUT_STOP);
     } else if (playPauseSwitchStatus == true) {  //means play is active
      
       if (countdownFinished()) {//prepare the next routine
