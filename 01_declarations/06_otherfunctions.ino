@@ -253,6 +253,7 @@ bool togglesDurationGreaterThanTimeWindow (){
     
 void togglePlayPauseSwitchStatus() {
   playPauseSwitchStatus = !playPauseSwitchStatus;
+  lastSecondMark = currentMillis;
   if (playPauseSwitchStatus) {
     //Serial.println("PAUSE");//means input is PAUSE
   } else {

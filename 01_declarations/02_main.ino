@@ -26,32 +26,44 @@ void loop() {
     lastTimeButtonsChecked = currentMillis;
 
     if (digitalRead(A0)) {  //PIN_BUTTON_PLUS
-      //Serial.println("MAS");
       transition(INPUT_INCREASE);
-    } else if (digitalRead(A1)) {  //PIN_BUTTON_MINUS
-      //Serial.println("MINUS");
+      return;
+    }
+    
+    if (digitalRead(A1)) {  //PIN_BUTTON_MINUS
       transition(INPUT_DECREASE);
-    } else if (digitalRead(A2)) {  //PIN_BUTTON_NEXT
-      //Serial.println("NEXT");
-    } else if (digitalRead(A3)) {  //PIN_BUTTON_PLAY_PAUSE
-      if (togglesDurationGreaterThanTimeWindow()){
-        togglePlayPauseSwitchStatus();        
-        //countdownStarted(); // ES NECESARIO???????
-        //delay(1000);
+      return;
+    }
+    
+    if (digitalRead(A2)) {  //PIN_BUTTON_NEXT
+      return;
+    }
+    
+    if (digitalRead(A3)) {  //PIN_BUTTON_PLAY_PAUSE
+      if (!togglesDurationGreaterThanTimeWindow()){
+        return;
       }
-    } else if (digitalRead(A4)) {  //PIN_BUTTON_STOP
+
+      togglePlayPauseSwitchStatus();
+      return;
+    }
+    
+    if (digitalRead(A4)) {  //PIN_BUTTON_STOP
       transition(INPUT_STOP);
-    } else if (playPauseSwitchStatus == true) {  //means play is active
-     
-      if (countdownFinished()) {//prepare the next routine
-        if (nextRoutineIsReady() == false) {
-          return;
-        }
+      return;
+    }
+
+  }
+
+  if (playPauseSwitchStatus == true) {  //means play is active
+    if (countdownFinished()) {//prepare the next routine
+      if (nextRoutineIsReady() == false) {
+        return;
       }
+    }
 
       checkForSounds();
       makeACountDown();
-    }
   }
 
   transition(INPUT_WAIT);
