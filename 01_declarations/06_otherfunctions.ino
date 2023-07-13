@@ -74,8 +74,8 @@ void checkForSounds() {
 
 bool countdownFinished() {
   if (indexSecond != 0 or indexTenthOfASecond != 0 or indexMinute != 0 or indexTenthOfAMinute != 0) {
-    return false;
     countdownFinishedMark = currentMillis;
+    return false;
   }
   return true;
 }

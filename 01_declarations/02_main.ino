@@ -55,6 +55,8 @@ void loop() {
 
   }
 
+  transition(INPUT_WAIT);
+
   if (playPauseSwitchStatus == true) {  //means play is active
     if (countdownFinished()) {//prepare the next routine
       if (nextRoutineIsReady() == false) {
@@ -62,9 +64,7 @@ void loop() {
       }
     }
 
-      checkForSounds();
-      makeACountDown();
+    checkForSounds();
+    makeACountDown();
   }
-
-  transition(INPUT_WAIT);
 }
