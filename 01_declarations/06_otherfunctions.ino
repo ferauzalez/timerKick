@@ -222,6 +222,7 @@ bool nextRoutineIsReady() {
   }
   
   assignDigitsForCountdown();
+  lastSecondMark = currentMillis;
  
   return true;
 }
