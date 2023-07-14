@@ -4,10 +4,17 @@ void setup() {
   myDFPlayer.begin(DFPlayerSerial);
   
 
-  pinMode(PIN_LATCH, OUTPUT);
-  pinMode(PIN_CLOCK, OUTPUT);
-  pinMode(PIN_DATA, OUTPUT);
+  pinMode(PIN_LATCH,   OUTPUT);
+  pinMode(PIN_CLOCK,   OUTPUT);
+  pinMode(PIN_DATA,    OUTPUT);
   pinMode(PIN_SECONDS, OUTPUT);
+
+  pinMode(PIN_ROUTINE1, OUTPUT);
+  pinMode(PIN_ROUTINE2, OUTPUT);
+  pinMode(PIN_ROUTINE3, OUTPUT);
+  pinMode(PIN_ROUTINE4, OUTPUT);
+  pinMode(PIN_WORK,     OUTPUT);
+  pinMode(PIN_REST,     OUTPUT);
 
   pinMode(A0, INPUT);  //PIN_BUTTON_PLUS
   pinMode(A1, INPUT);  //PIN_BUTTON_MINUS
@@ -15,7 +22,14 @@ void setup() {
   pinMode(A3, INPUT);  //PIN_BUTTON_PLAY
   pinMode(A4, INPUT);  //PIN_BUTTON_STOP
 
-  assignDigitsForCountdown();
+  digitalWrite(PIN_ROUTINE1, LOW);
+  digitalWrite(PIN_ROUTINE2, LOW);
+  digitalWrite(PIN_ROUTINE3, LOW);
+  digitalWrite(PIN_ROUTINE4, LOW);
+  digitalWrite(PIN_WORK    , LOW);
+  digitalWrite(PIN_REST    , LOW);
+
+  //assignDigitsForCountdown();
 }
 
 void loop() {
@@ -36,6 +50,7 @@ void loop() {
     }
     
     if (digitalRead(A2)) {  //PIN_BUTTON_NEXT
+      transition(INPUT_NEXT);
       return;
     }
     

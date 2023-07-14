@@ -21,17 +21,17 @@
 void assignDigitsForCountdown() {
 
   if (workRoutine) {
-    indexSecond         = indexSecondOfWorkRoutine;
-    indexTenthOfASecond = indexTenthOfASecondOfWorkRoutine;
-    indexMinute         = indexMinuteOfWorkRoutine;
-    indexTenthOfAMinute = indexTenthOfAMinuteOfWorkRoutine;
+    indexSecond         = workModes[indexRoutine - 2][3];
+    indexTenthOfASecond = workModes[indexRoutine - 2][2];
+    indexMinute         = workModes[indexRoutine - 2][1];
+    indexTenthOfAMinute = workModes[indexRoutine - 2][0];
     
     return;
   }
-    indexSecond         = indexSecondOfRestRoutine;
-    indexTenthOfASecond = indexTenthOfASecondOfRestRoutine;
-    indexMinute         = indexMinuteOfRestRoutine;
-    indexTenthOfAMinute = indexTenthOfAMinuteOfRestRoutine;
+    indexSecond         = workModes[indexRoutine - 1][3];
+    indexTenthOfASecond = workModes[indexRoutine - 1][2];
+    indexMinute         = workModes[indexRoutine - 1][1];
+    indexTenthOfAMinute = workModes[indexRoutine - 1][0];
 }
 
 
@@ -191,6 +191,15 @@ void increaseTenthOfAMinute() {
   }
 }
 
+void ledsIndicatorsControl(int led1, int led2, int led3, int led4, int ledWork, int ledRest) {
+  digitalWrite(PIN_ROUTINE1, led1);
+  digitalWrite(PIN_ROUTINE2, led2);
+  digitalWrite(PIN_ROUTINE3, led3);
+  digitalWrite(PIN_ROUTINE4, led4);
+  digitalWrite(PIN_WORK    , ledWork);
+  digitalWrite(PIN_REST    , ledRest);
+}
+
 void makeACountDown() {
   if (currentMillis - lastSecondMark >= ONE_SECOND) {
     lastSecondMark = currentMillis;
@@ -198,15 +207,9 @@ void makeACountDown() {
   }
 }
 
-void playSound(int fileNumber) {
-  myDFPlayer.volume(30);
-  myDFPlayer.play(fileNumber);
-   // must be 1,2 or 3.
-}
-
 bool nextRoutineIsReady() {
 
-  if (currentMillis - countdownFinishedMark < 4000) {//ONE_SECOND
+  if (currentMillis - countdownFinishedMark < 2000) {//ONE_SECOND
     return false;
   }
 
@@ -225,6 +228,12 @@ bool nextRoutineIsReady() {
   lastSecondMark = currentMillis;
  
   return true;
+}
+
+void playSound(int fileNumber) {
+  myDFPlayer.volume(30);
+  myDFPlayer.play(fileNumber);
+   // must be 1,2 or 3.
 }
 
 void switchColonMode(int colonMode) {

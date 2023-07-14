@@ -10,10 +10,18 @@ const int PIN_CLOCK        = 3;
 const int PIN_DATA         = 4;
 const int PIN_SECONDS      = 12;
 
+const int PIN_ROUTINE1      = 12;
+const int PIN_ROUTINE2      = 12;
+const int PIN_ROUTINE3      = 12;
+const int PIN_ROUTINE4      = 12;
+const int PIN_WORK          = 12;
+const int PIN_REST          = 12;
+
 const int STATE_WAIT       = 0;
 const int STATE_INCREASE   = 1;
 const int STATE_DECREASE   = 2;
 const int STATE_STOP       = 3;
+const int STATE_NEXT       = 3;
 
 const int INPUT_INCREASE   = 0;
 const int INPUT_DECREASE   = 1;
@@ -25,6 +33,7 @@ const int INPUT_WAIT            = 6;
 
 const int INPUTS_READING_PERIOD = 130;
 const int ONE_SECOND = 1000;
+const int TOTAL_ROUTINES = 4;
 
 //0,1,2,3,4,5,6,7,8,9,BARRA,NONE
 const int SEVEN_SEGMENTS_CODES[12] = {126, 48, 109, 121, 51, 91, 95, 112, 127, 115, 1, 0};
@@ -43,33 +52,42 @@ int workModes[6][4] = {{0,0,2,0},//work 1
                        {0,1,3,0},//work 2
                        {0,0,2,0},
                        {0,0,3,0},//work 3
+                       {0,0,2,0},
+                       {0,0,3,0},//work 4
                        {0,0,2,0}};
 
-int                  colonStatus                        = LOW;
-static unsigned long currentMillis                      = 0;
-unsigned long        lastTimeColonStatusBlink           = 0;
-unsigned long        lastTimeButtonsChecked             = 0;
-unsigned long        lastTimePlayPauseStatusChanged     = 0;
-unsigned long        lastSecondMark                     = 0;
-unsigned long        countdownFinishedMark                     = 0;
-String               stringText                         = "";
-String               stringMsg                          = "";
-bool                 playPauseSwitchStatus              = false;
 
-int                  indexTenthOfAMinuteOfWorkRoutine   = workModes[4][0];
-int                  indexMinuteOfWorkRoutine           = workModes[4][1];
-int                  indexTenthOfASecondOfWorkRoutine   = workModes[4][2];
-int                  indexSecondOfWorkRoutine           = workModes[4][3];
+unsigned long currentMillis                      = 0;
+unsigned long lastTimeColonStatusBlink           = 0;
+unsigned long lastTimeButtonsChecked             = 0;
+unsigned long lastTimePlayPauseStatusChanged     = 0;
+unsigned long lastSecondMark                     = 0;
+unsigned long countdownFinishedMark              = 0;
 
-int                  indexTenthOfAMinuteOfRestRoutine   = workModes[5][0];
-int                  indexMinuteOfRestRoutine           = workModes[5][1];
-int                  indexTenthOfASecondOfRestRoutine   = workModes[5][2];
-int                  indexSecondOfRestRoutine           = workModes[5][3];
+String        stringText                         = "";
+String        stringMsg                          = "";
 
-int                  indexTenthOfAMinute                = 11;
-int                  indexMinute                        = 11;
-int                  indexTenthOfASecond                = 11;
-int                  indexSecond                        = 11;
+bool          playPauseSwitchStatus              = false;
+bool          workRoutine                        = true; //true means work, false means routine 1(rest)
+int           colonStatus                        = LOW;
 
-bool                 workRoutine                        = true; //true means work, false means routine 1(rest)
-int                  series                             = 1;
+int           indexTenthOfAMinuteOfWorkRoutine   = workModes[0][0];
+int           indexMinuteOfWorkRoutine           = workModes[0][1];
+int           indexTenthOfASecondOfWorkRoutine   = workModes[0][2];
+int           indexSecondOfWorkRoutine           = workModes[0][3];
+
+int           indexTenthOfAMinuteOfRestRoutine   = workModes[0][0];
+int           indexMinuteOfRestRoutine           = workModes[0][1];
+int           indexTenthOfASecondOfRestRoutine   = workModes[0][2];
+int           indexSecondOfRestRoutine           = workModes[0][3];
+
+int           indexTenthOfAMinute                = 11;
+int           indexMinute                        = 11;
+int           indexTenthOfASecond                = 11;
+int           indexSecond                        = 11;
+
+
+int           series                             = 1;
+//int           indexLEDsRoutines                  = 0;
+int           indexRoutine                       = 0;
+int           subIndexRoutine                    = 0;
