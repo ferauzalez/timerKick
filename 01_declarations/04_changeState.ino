@@ -18,5 +18,8 @@ void changeState(int state) {
     case STATE_STOP:
       activateStopStateOutputs();
       break;
+    case STATE_NEXT:
+      activateNextStateOutputs();
+      break;
   }
 }
