@@ -19,16 +19,6 @@
 }*/
 
 void assignDigitsForCountdown() {
-
-  if (IndexRoutine == 10) {
-    indexTenthOfAMinute = 10;
-    indexMinute         = 10;
-    indexTenthOfASecond = 1;
-    indexSecond         = 2;
-    
-    return;    
-  }
-
   if (workRoutine) {
     indexSecond         = workModes[indexRoutine - 2][3];
     indexTenthOfASecond = workModes[indexRoutine - 2][2];
@@ -90,10 +80,16 @@ bool countdownFinished() {
 }
 
 void countdownStarted(){  
-  if (subIndexRoutine < 2) {
-    workRoutine = true;
-  } else {
+  if (subIndexRoutine == 2) {
     workRoutine = false;
+  } else {
+    workRoutine = true;
+  }
+
+  if (indexRoutine == 8) {
+    series = freeSeries;
+  } else {
+    series = SERIES;
   }
   
   assignDigitsForCountdown();
@@ -176,14 +172,22 @@ void freeRoutine() {
   }
 
   if (subIndexRoutine == 2) {
-    workModes[indexRoutine - 2][3] = indexSecond;
-    workModes[indexRoutine - 2][2] = indexTenthOfASecond;
-    workModes[indexRoutine - 2][1] = indexMinute;
-    workModes[indexRoutine - 2][0] = indexTenthOfAMinute;
+    workModes[indexRoutine - 1][3] = indexSecond;
+    workModes[indexRoutine - 1][2] = indexTenthOfASecond;
+    workModes[indexRoutine - 1][1] = indexMinute;
+    workModes[indexRoutine - 1][0] = indexTenthOfAMinute;
+  }
+  
+  if (subIndexRoutine == 3) {
+    freeSeries = indexSecond + indexTenthOfASecond;
+  }
 
+  if (subIndexRoutine == 4) {
     subIndexRoutine = 0;
+    indexRoutine = 0;
+      
     return;
-  }     
+  }
   
   subIndexRoutine++;
 }
@@ -227,7 +231,7 @@ void increaseTenthOfAMinute() {
   }
 }
 
-void ledsIndicatorsControl() {
+/*void ledsIndicatorsControl() {
 
   switch (indexRoutine){
     case 2: //routine 1 (free routine)
@@ -246,16 +250,7 @@ void ledsIndicatorsControl() {
       displayLEDsIndicators(LOW,LOW,LOW,LOW);
       break;
   }
-
-  if (indexRoutine == 0) {
-    indexTenthOfAMinute = 11;
-    indexMinute         = 11;
-    indexTenthOfASecond = 11;
-    indexSecond         = 11;
-  } else {
-    countdownStarted();
-  }
-}
+}*/
 
 void ledsWorkAndRestControl(){
   if (indexSecond == 11 and indexTenthOfASecond == 11 and indexMinute == 11 and indexTenthOfAMinute == 11) {
@@ -315,14 +310,14 @@ void playSound(int fileNumber) {
   myDFPlayer.play(fileNumber);
    // must be 1,2 or 3.
 }
-
+/*
 void setSeries() {
     if (subIndexRoutine == 3) {
     series = indexSecond + indexTenthOfASecond;
   } else {
     series = 12;
   }
-}
+}*/
 
 void switchColonMode(int colonMode) {
   switch (colonMode) {  //0: OFF, 1: ON, 2: blink

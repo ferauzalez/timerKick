@@ -29,11 +29,12 @@ const int INPUT_NEXT       = 2;
 const int INPUT_PLAY       = 3;
 const int INPUT_PAUSE      = 4;
 const int INPUT_STOP       = 5;
-const int INPUT_WAIT            = 6;
+const int INPUT_WAIT       = 6;
 
 const int INPUTS_READING_PERIOD = 130;
-const int ONE_SECOND = 1000;
-const int TOTAL_ROUTINES = 4;
+const int ONE_SECOND            = 1000;
+const int TOTAL_ROUTINES        = 4;
+const int SERIES                = 3;
 
 //0,1,2,3,4,5,6,7,8,9,BARRA,NONE
 const int SEVEN_SEGMENTS_CODES[12] = {126, 48, 109, 121, 51, 91, 95, 112, 127, 115, 1, 0};
@@ -53,8 +54,8 @@ int workModes[8][4] = {{0,0,2,0},//work 1
                        {0,0,1,5},
                        {0,0,3,0},//work 3
                        {0,0,2,0},
-                       {0,0,3,5},//work 4
-                       {0,0,3,0}};
+                       {0,0,0,0},//work 4
+                       {0,0,0,0}};
 
 
 unsigned long currentMillis                      = 0;
@@ -87,7 +88,8 @@ int           indexTenthOfASecond                = 11;
 int           indexSecond                        = 11;
 
 
-int           series                             = 12;
+int           series                             = SERIES;
+int           freeSeries                         = SERIES;
 //int           indexLEDsRoutines                  = 0;
 int           indexRoutine                       = 0;
 int           subIndexRoutine                    = 0;

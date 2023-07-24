@@ -33,6 +33,8 @@ void setup() {
 }
 
 void loop() {
+  transition(INPUT_WAIT);
+  
   currentMillis = millis();
 
   if (currentMillis - lastTimeButtonsChecked >= INPUTS_READING_PERIOD) {
@@ -69,8 +71,6 @@ void loop() {
     }
 
   }
-
-  transition(INPUT_WAIT);
 
   if (playPauseSwitchStatus == true) {  //means play is active
     if (countdownFinished()) {//prepare the next routine

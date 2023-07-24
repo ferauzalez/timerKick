@@ -1,7 +1,7 @@
 void transition(int currentInput) {
   if (currentInput != 6) {
-    stringText = "currentInput: ";
-    stringMsg = stringText + currentInput;
+    //stringText = "currentInput: ";
+    //stringMsg = stringText + currentInput;
     //Serial.println(stringMsg);
   }
   switch (currentInput) {
