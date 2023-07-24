@@ -20,6 +20,15 @@
 
 void assignDigitsForCountdown() {
 
+  if (IndexRoutine == 10) {
+    indexTenthOfAMinute = 10;
+    indexMinute         = 10;
+    indexTenthOfASecond = 1;
+    indexSecond         = 2;
+    
+    return;    
+  }
+
   if (workRoutine) {
     indexSecond         = workModes[indexRoutine - 2][3];
     indexTenthOfASecond = workModes[indexRoutine - 2][2];
@@ -80,14 +89,13 @@ bool countdownFinished() {
   return true;
 }
 
-void countdownStarted(){
-  /*
-  if (playPauseSwitchStatus == true) {
-      playSound(1);   
+void countdownStarted(){  
+  if (subIndexRoutine < 2) {
+    workRoutine = true;
+  } else {
+    workRoutine = false;
   }
-*/
-  series = 1;
-  workRoutine = true;
+  
   assignDigitsForCountdown();
 }
 
@@ -140,6 +148,13 @@ void display() {
   digitalWrite(PIN_LATCH, HIGH);
 }
 
+void displayLEDsIndicators(int led1, int led2, int led3, int led4) {
+  digitalWrite(PIN_ROUTINE1, led1);
+  digitalWrite(PIN_ROUTINE2, led2);
+  digitalWrite(PIN_ROUTINE3, led3);
+  digitalWrite(PIN_ROUTINE4, led4);
+}
+
 /*
 void display(int index) {
   digitalWrite(PIN_LATCH, LOW);
@@ -151,6 +166,27 @@ void display(int index) {
 
   digitalWrite(PIN_LATCH, HIGH);
 }*/
+
+void freeRoutine() {
+  if (subIndexRoutine == 1) {
+    workModes[indexRoutine - 2][3] = indexSecond;
+    workModes[indexRoutine - 2][2] = indexTenthOfASecond;
+    workModes[indexRoutine - 2][1] = indexMinute;
+    workModes[indexRoutine - 2][0] = indexTenthOfAMinute;
+  }
+
+  if (subIndexRoutine == 2) {
+    workModes[indexRoutine - 2][3] = indexSecond;
+    workModes[indexRoutine - 2][2] = indexTenthOfASecond;
+    workModes[indexRoutine - 2][1] = indexMinute;
+    workModes[indexRoutine - 2][0] = indexTenthOfAMinute;
+
+    subIndexRoutine = 0;
+    return;
+  }     
+  
+  subIndexRoutine++;
+}
 
 void increaseTime() {
   increaseSeconds();
@@ -191,14 +227,58 @@ void increaseTenthOfAMinute() {
   }
 }
 
-void ledsIndicatorsControl(int led1, int led2, int led3, int led4, int ledWork, int ledRest) {
-  digitalWrite(PIN_ROUTINE1, led1);
-  digitalWrite(PIN_ROUTINE2, led2);
-  digitalWrite(PIN_ROUTINE3, led3);
-  digitalWrite(PIN_ROUTINE4, led4);
-  digitalWrite(PIN_WORK    , ledWork);
-  digitalWrite(PIN_REST    , ledRest);
+void ledsIndicatorsControl() {
+
+  switch (indexRoutine){
+    case 2: //routine 1 (free routine)
+      displayLEDsIndicators(HIGH,LOW,LOW,LOW);
+      break;
+    case 4: //routine 2
+      displayLEDsIndicators(LOW,HIGH,LOW,LOW);
+      break;
+    case 6: //routine 3
+      displayLEDsIndicators(LOW,LOW,HIGH,LOW);
+      break;
+    case 8: //routine 4
+      displayLEDsIndicators(LOW,LOW,LOW,HIGH);
+      break;
+    default:
+      displayLEDsIndicators(LOW,LOW,LOW,LOW);
+      break;
+  }
+
+  if (indexRoutine == 0) {
+    indexTenthOfAMinute = 11;
+    indexMinute         = 11;
+    indexTenthOfASecond = 11;
+    indexSecond         = 11;
+  } else {
+    countdownStarted();
+  }
 }
+
+void ledsWorkAndRestControl(){
+  if (indexSecond == 11 and indexTenthOfASecond == 11 and indexMinute == 11 and indexTenthOfAMinute == 11) {
+    digitalWrite(PIN_WORK , LOW);
+    digitalWrite(PIN_REST , LOW);
+    return;
+  }
+
+  if (indexSecond == 0 and indexTenthOfASecond == 0 and indexMinute == 0 and indexTenthOfAMinute == 0) {
+    digitalWrite(PIN_WORK , LOW);
+    digitalWrite(PIN_REST , LOW);
+    return;
+  }
+  
+  if (workRoutine) {
+    digitalWrite(PIN_WORK , HIGH);
+    digitalWrite(PIN_REST , LOW);
+  } else {
+    digitalWrite(PIN_WORK , LOW);
+    digitalWrite(PIN_REST , HIGH);
+  }
+}
+
 
 void makeACountDown() {
   if (currentMillis - lastSecondMark >= ONE_SECOND) {
@@ -234,6 +314,14 @@ void playSound(int fileNumber) {
   myDFPlayer.volume(30);
   myDFPlayer.play(fileNumber);
    // must be 1,2 or 3.
+}
+
+void setSeries() {
+    if (subIndexRoutine == 3) {
+    series = indexSecond + indexTenthOfASecond;
+  } else {
+    series = 12;
+  }
 }
 
 void switchColonMode(int colonMode) {

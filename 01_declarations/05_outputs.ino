@@ -1,37 +1,18 @@
 void activateNextStateOutputs() {
-  if (indexLEDsRoutines < TOTAL_ROUTINES * 2) {
+  if (indexRoutine <= TOTAL_ROUTINES * 2) {
     indexRoutine = indexRoutine + 2;
+  } // conflicto entre 8 y 10, no estoy del todo seguro de que deba poner <=
+
+  ledsIndicatorsControl();
+
+  if (indexRoutine == 8) {
+    freeRoutine();    
   }
 
-  switch (indexRoutine){
-    case 2: //routine 1 (free routine)
-      ledsIndicatorsControl(HIGH,LOW,LOW,LOW,LOW,LOW);
-      break;
-    case 4: //routine 2
-      ledsIndicatorsControl(LOW,HIGH,LOW,LOW,LOW,LOW);
-      break;
-    case 6: //routine 3
-      ledsIndicatorsControl(LOW,LOW,HIGH,LOW,LOW,LOW);
-      break;
-    case 8: //routine 4
-      if (subIndexRoutine == 0) {
-        ledsIndicatorsControl(LOW,LOW,LOW,HIGH,HIGH,LOW);
-        subIndexRoutine++;
-      }
-      
-      if (subIndexRoutine == 1) {
-        ledsIndicatorsControl(LOW,LOW,LOW,HIGH,LOW,HIGH);
-        subIndexRoutine = 0;
-        indexRoutine = 0;
-      }
-      break;
-    default:
-      ledsIndicatorsControl(HIGH,LOW,LOW,LOW,LOW,HIGH);
-      break;
+  if (indexRoutine == 10) {
+    setSeries();
+    indexRoutine = 0;
   }
-
-  assignDigitsForCountdown();
-  
 }
 
 void activateStopStateOutputs() {
@@ -50,7 +31,10 @@ void activateIncreaseStateOutputs() {
 }
 
 void activateWaitStateOutputs() {
+  
+  ledsWorkAndRestControl();
   display();
+  
   if (playPauseSwitchStatus) {
     switchColonMode(1);
   } else {

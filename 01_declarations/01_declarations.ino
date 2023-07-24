@@ -8,20 +8,20 @@ DFRobotDFPlayerMini myDFPlayer;
 const int PIN_LATCH        = 2;
 const int PIN_CLOCK        = 3;
 const int PIN_DATA         = 4;
-const int PIN_SECONDS      = 12;
+const int PIN_SECONDS      = 6;
 
 const int PIN_ROUTINE1      = 12;
-const int PIN_ROUTINE2      = 12;
-const int PIN_ROUTINE3      = 12;
-const int PIN_ROUTINE4      = 12;
-const int PIN_WORK          = 12;
-const int PIN_REST          = 12;
+const int PIN_ROUTINE2      = 11;
+const int PIN_ROUTINE3      = 10;
+const int PIN_ROUTINE4      = 9;
+const int PIN_WORK          = 8;
+const int PIN_REST          = 7;
 
 const int STATE_WAIT       = 0;
 const int STATE_INCREASE   = 1;
 const int STATE_DECREASE   = 2;
 const int STATE_STOP       = 3;
-const int STATE_NEXT       = 3;
+const int STATE_NEXT       = 4;
 
 const int INPUT_INCREASE   = 0;
 const int INPUT_DECREASE   = 1;
@@ -47,14 +47,14 @@ int indicesToDisplay[2][4] = {
   {SEVEN_SEGMENTS_CODES[11], SEVEN_SEGMENTS_CODES[11], SEVEN_SEGMENTS_CODES[11], SEVEN_SEGMENTS_CODES[11]}
 };*/
 
-int workModes[6][4] = {{0,0,2,0},//work 1
+int workModes[8][4] = {{0,0,2,0},//work 1
                        {0,0,2,5},
-                       {0,1,3,0},//work 2
-                       {0,0,2,0},
+                       {0,0,4,0},//work 2
+                       {0,0,1,5},
                        {0,0,3,0},//work 3
                        {0,0,2,0},
-                       {0,0,3,0},//work 4
-                       {0,0,2,0}};
+                       {0,0,3,5},//work 4
+                       {0,0,3,0}};
 
 
 unsigned long currentMillis                      = 0;
@@ -87,7 +87,7 @@ int           indexTenthOfASecond                = 11;
 int           indexSecond                        = 11;
 
 
-int           series                             = 1;
+int           series                             = 12;
 //int           indexLEDsRoutines                  = 0;
 int           indexRoutine                       = 0;
 int           subIndexRoutine                    = 0;
