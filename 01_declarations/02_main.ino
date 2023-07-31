@@ -1,8 +1,7 @@
 void setup() {
-  //Serial.begin(9600);
   DFPlayerSerial.begin(9600);
   myDFPlayer.begin(DFPlayerSerial);
-  
+  myDFPlayer.volume(30);
 
   pinMode(PIN_LATCH,   OUTPUT);
   pinMode(PIN_CLOCK,   OUTPUT);
@@ -28,8 +27,6 @@ void setup() {
   digitalWrite(PIN_ROUTINE4, LOW);
   digitalWrite(PIN_WORK    , LOW);
   digitalWrite(PIN_REST    , LOW);
-
-  //assignDigitsForCountdown();
 }
 
 void loop() {
@@ -79,7 +76,7 @@ void loop() {
       }
     }
 
-    checkForSounds();
+    checkForSounds();    
     makeACountDown();
   }
 }

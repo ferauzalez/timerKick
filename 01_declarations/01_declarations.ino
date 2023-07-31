@@ -93,3 +93,8 @@ int           freeSeries                         = SERIES;
 //int           indexLEDsRoutines                  = 0;
 int           indexRoutine                       = 0;
 int           subIndexRoutine                    = 0;
+int           counterOfSeconds                   = 0;
+
+bool          firstSoundPlayed                   = false;
+bool          secondSoundPlayed                  = false;
+bool          thirdSoundPlayed                   = false;

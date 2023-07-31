@@ -48,27 +48,44 @@ void blinkColon() {
     digitalWrite(PIN_SECONDS, colonStatus);
   }
 }
-
+/*
+bool checkForFirstSound() {
+  if (currentMillis - workRoutineMark < 1000) {//ONE_SECOND
+    workRoutineFlag == false;
+  } else {
+    workRoutineFlag == true;
+  }
+}
+*/
 void checkForSounds() {
   if (!workRoutine) {
     return;    
   }
 
-  if (indexSecond         == indexSecondOfWorkRoutine         and
-      indexTenthOfASecond == indexTenthOfASecondOfWorkRoutine and
-      indexMinute         == indexMinuteOfWorkRoutine         and
-      indexTenthOfAMinute == indexTenthOfAMinuteOfWorkRoutine
+  if (indexSecond         == workModes[indexRoutine - 2][3]   and
+      indexTenthOfASecond == workModes[indexRoutine - 2][2]   and
+      indexMinute         == workModes[indexRoutine - 2][1]   and
+      indexTenthOfAMinute == workModes[indexRoutine - 2][0]   and
+      firstSoundPlayed == false
   ) {
-    playSound(1);
+    myDFPlayer.playMp3Folder(1);
+    firstSoundPlayed = true;
+    return;
   }
   
-  if (indexSecond == 1 and indexTenthOfASecond == 1 and indexMinute == 0 and indexTenthOfAMinute == 0) {
-    playSound(3);
+  if (indexSecond == 1 and indexTenthOfASecond == 1 and indexMinute == 0 and indexTenthOfAMinute == 0 and secondSoundPlayed == false) {
+    myDFPlayer.playMp3Folder(3);
+    secondSoundPlayed = true;
+    return;
   }
 
-  if (indexSecond == 1 and indexTenthOfASecond == 0 and indexMinute == 0 and indexTenthOfAMinute == 0) {
-    playSound(2);
+  if (indexSecond == 1 and indexTenthOfASecond == 0 and indexMinute == 0 and indexTenthOfAMinute == 0 and thirdSoundPlayed == false) {
+    myDFPlayer.playMp3Folder(2);
+    thirdSoundPlayed = true;
+    return;
   }
+
+
 }
 
 bool countdownFinished() {
@@ -84,6 +101,10 @@ void countdownStarted(){
     workRoutine = false;
   } else {
     workRoutine = true;
+
+    firstSoundPlayed   = false;
+    secondSoundPlayed  = false; 
+    thirdSoundPlayed   = false;
   }
 
   if (indexRoutine == 8) {
@@ -93,6 +114,7 @@ void countdownStarted(){
   }
   
   assignDigitsForCountdown();
+  counterOfSeconds = 0;
 }
 
 void decreaseTime() {
@@ -264,6 +286,12 @@ void ledsWorkAndRestControl(){
     digitalWrite(PIN_REST , LOW);
     return;
   }
+
+  if (subIndexRoutine == 3) {
+    digitalWrite(PIN_WORK , LOW);
+    digitalWrite(PIN_REST , LOW);
+    return;
+  }
   
   if (workRoutine) {
     digitalWrite(PIN_WORK , HIGH);
@@ -278,7 +306,17 @@ void ledsWorkAndRestControl(){
 void makeACountDown() {
   if (currentMillis - lastSecondMark >= ONE_SECOND) {
     lastSecondMark = currentMillis;
-    transition(INPUT_DECREASE);
+
+    if (!workRoutine) {
+      transition(INPUT_DECREASE);
+    } else {
+      counterOfSeconds++;
+      if (counterOfSeconds > 1) {
+        transition(INPUT_DECREASE);
+      }
+    }
+    
+
   }
 }
 
@@ -297,6 +335,10 @@ bool nextRoutineIsReady() {
   
   if (!workRoutine) {
     series--;
+  } else {
+    firstSoundPlayed   = false;
+    secondSoundPlayed  = false; 
+    thirdSoundPlayed   = false;
   }
   
   assignDigitsForCountdown();
@@ -304,13 +346,13 @@ bool nextRoutineIsReady() {
  
   return true;
 }
-
+/*
 void playSound(int fileNumber) {
-  myDFPlayer.volume(30);
+  
   myDFPlayer.play(fileNumber);
    // must be 1,2 or 3.
 }
-/*
+
 void setSeries() {
     if (subIndexRoutine == 3) {
     series = indexSecond + indexTenthOfASecond;
